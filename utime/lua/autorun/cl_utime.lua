@@ -141,7 +141,11 @@ function PANEL:Think()
    
 	local tr = util.GetPlayerTrace( LocalPlayer(), LocalPlayer():GetAimVector() )
 	local trace = util.TraceLine( tr )	   
-	if trace.Entity and trace.Entity:IsValid() and trace.Entity:IsPlayer() then
+	if trace.Entity and trace.Entity:IsValid() and trace.Entity:IsPlayer() 
+		and (EQUIP_DISQUISE == nil or trace.Entity:HasEquipmentItem(EQUIP_DISGUISE) == false) then
+		-- only show player info if they are not a Traitor in Disquise
+		-- if EQUIP_DISQUISE is nill we are not TTT, show extra info
+		-- if HasEquipmentItem(EQUIP_DISGUISE) is false they are not in Disquise, show extra info
 		self.TargetSize = self.Large
 		self.playerInfo:SetPlayer( trace.Entity )
 		locktime = CurTime()
